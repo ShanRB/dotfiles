@@ -21,7 +21,7 @@ local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
 
-M.formatting = { format_on_save = { enabled = true }, disabled = {} } -- TODO: Custom control
+M.formatting = { format_on_save = { enabled = false }, disabled = {} } -- TODO: Custom control
 if type(M.formatting.format_on_save) == "boolean" then
   M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
 end
