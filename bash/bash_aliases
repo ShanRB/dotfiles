@@ -1,0 +1,29 @@
+# ~/.bash_aliases: keep all aliases for bash here
+
+# Make shorthands for common flags
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Save a lot of typing for common commands
+alias gs="git status"
+alias gc="git commit"
+alias v="vim"
+
+# Save you from mistyping
+alias sl=ls
+
+# Overwrite existing commands for better defaults
+alias mv="mv -i"           # -i prompts before overwrite
+alias mkdir="mkdir -p"     # -p make parent dirs as needed
+alias df="df -h"           # -h prints human readable format
+
+# Alias can be composed
+alias la="ls -A"
+alias lla="la -l"
+
+# Program aliases
+alias python="python3"
+alias pip="pip3"
+alias vim="nvim"
+

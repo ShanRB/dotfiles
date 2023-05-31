@@ -35,73 +35,27 @@ link_file () {
 
   if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
   then
+    info "File already exists: $dst ($(basename "$src"))"
 
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+    # do not link file if already linked
+    local currentdst="$(readlink $dst)"
+    if [ "$currentdst" == "$src" ]
     then
-
-      local currentSrc="$(readlink $dst)"
-
-      if [ "$currentSrc" == "$src" ]
-      then
-
-        skip=true;
-
-      else
-
-        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
-
-        case "$action" in
-          o )
-            overwrite=true;;
-          O )
-            overwrite_all=true;;
-          b )
-            backup=true;;
-          B )
-            backup_all=true;;
-          s )
-            skip=true;;
-          S )
-            skip_all=true;;
-          * )
-            ;;
-        esac
-
-      fi
-
+      info "already linked to $src"
+      return
     fi
 
-    overwrite=${overwrite:-$overwrite_all}
-    backup=${backup:-$backup_all}
-    skip=${skip:-$skip_all}
-
-    if [ "$overwrite" == "true" ]
-    then
-      rm -rf "$dst"
-      success "removed $dst"
-    fi
-
-    if [ "$backup" == "true" ]
-    then
-      mv "$dst" "${dst}.backup"
-      success "moved $dst to ${dst}.backup"
-    fi
-
-    if [ "$skip" == "true" ]
-    then
-      success "skipped $src"
-    fi
+    mv "$dst" "${dst}.backup"
+    success "moved $dst to ${dst}.backup"
   fi
 
-  if [ "$skip" != "true" ]  # "false" or empty
-  then
-    ln -sdf "$1" "$2"
-    success "linked $1 to $2"
-  fi
+  ln -sdf "$1" "$2"
+  success "linked $1 to $2"
 }
 
 
 link_file "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
 # link_file "$DOTFILES_ROOT/tmux/.tmux.conf" "$HOME/.tmux.conf"
+# link_file "$DOTFILES_ROOT/tmux/.tmux.conf.local" "$HOME/.tmux.conf.local"
+link_file "$DOTFILES_ROOT/bash/bashrc" "$HOME/.bashrc"
+link_file "$DOTFILES_ROOT/bash/bash_aliases" "$HOME/.bash_aliases"
