@@ -1,4 +1,5 @@
-# ~/.bash_aliases: keep all aliases for bash here
+# interactive mode configs goes here, like aliases, prompt, etc
+# this file is sourced by other shell configs
 
 # Make shorthands for common flags
 alias ll='ls -alF'
@@ -26,4 +27,14 @@ alias lla="la -l"
 alias python="python3"
 alias pip="pip3"
 alias vim="nvim"
+
+# if run interactively
+if [ -t 0 ]; then
+    # other users shouldn't be able to message by default
+    mesg n
+
+    # enable colours
+#    if [ `tput colors` -ge 8 ]; then
+#    fi
+fi
 

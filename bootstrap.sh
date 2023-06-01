@@ -53,9 +53,9 @@ link_file () {
   success "linked $1 to $2"
 }
 
+link_file "$DOTFILES_ROOT/shell" "$HOME/.config/shell"
+link_file "$DOTFILES_ROOT/shell/.bashrc" "$HOME/.bashrc"
 
 link_file "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
 # link_file "$DOTFILES_ROOT/tmux/.tmux.conf" "$HOME/.tmux.conf"
 # link_file "$DOTFILES_ROOT/tmux/.tmux.conf.local" "$HOME/.tmux.conf.local"
-link_file "$DOTFILES_ROOT/bash/bashrc" "$HOME/.bashrc"
-link_file "$DOTFILES_ROOT/bash/bash_aliases" "$HOME/.bash_aliases"
