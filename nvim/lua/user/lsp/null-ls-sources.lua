@@ -6,12 +6,13 @@ return function(methods, code_actions, diagnostics, formatting, hover, completio
         -- python
         diagnostics.flake8.with({
             diagnostic_config = {
-                underline = true, virtual_text = false, signs = true, update_in_insert = false, severity_sort = true,
+                virtual_text = false, severity_sort = true,
             },
             diagnostics_format = "[#{c}] #{m} (#{s})",
             method = methods.DIAGNOSTICS_ON_SAVE,
+            extra_args = { "--config", vim.fn.expand("~/.config/flake8") },
         }),
-        formatting.black,
+        formatting.black.with({ extra_args = { "--line-length", "119" } }),
         formatting.isort.with({ extra_args = { "--profile", "black", "--line-length", "119" } }),
         -- git
         code_actions.gitsigns,

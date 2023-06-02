@@ -49,8 +49,29 @@ link_file () {
     success "moved $dst to ${dst}.backup"
   fi
 
-  ln -sdf "$1" "$2"
+  ln -s "$1" "$2"
   success "linked $1 to $2"
+}
+
+install_zsh() {
+  # Test to see if zshell is installed.  If it is:
+  if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
+    # Install Oh My Zsh if it isn't already present
+    if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
+      info "installing oh-my-zsh"
+      curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+    fi
+
+    # Set the default shell to zsh if it isn't currently set to zsh
+    if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
+      info "setting default shell to zsh"
+      chsh -s $(which zsh)
+    fi
+  else
+    # install zsh
+    sudo apt-get install zsh
+    fail "zsh not installed"
+  fi
 }
 
 link_file "$DOTFILES_ROOT/shell" "$HOME/.config/shell"
@@ -58,5 +79,5 @@ link_file "$DOTFILES_ROOT/shell/.bashrc" "$HOME/.bashrc"
 link_file "$DOTFILES_ROOT/shell/.bash_logout" "$HOME/.bash_logout"
 
 link_file "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
-# link_file "$DOTFILES_ROOT/tmux/.tmux.conf" "$HOME/.tmux.conf"
-# link_file "$DOTFILES_ROOT/tmux/.tmux.conf.local" "$HOME/.tmux.conf.local"
+link_file "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME/.tmux.conf"
+link_file "$DOTFILES_ROOT/tmux/tmux.conf.local" "$HOME/.tmux.conf.local"
