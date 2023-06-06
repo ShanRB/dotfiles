@@ -6,4 +6,7 @@ return {
             require("neovim.configs.gitsigns")
         end,
     },
+  {
+    "tpope/vim-fugitive",
+  }
 }
