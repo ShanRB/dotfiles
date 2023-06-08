@@ -80,4 +80,3 @@ link_file "$DOTFILES_ROOT/shell/.bash_logout" "$HOME/.bash_logout"
 
 link_file "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
 link_file "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME/.tmux.conf"
-link_file "$DOTFILES_ROOT/tmux/tmux.conf.local" "$HOME/.tmux.conf.local"
